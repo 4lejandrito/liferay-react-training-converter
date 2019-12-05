@@ -1,6 +1,5 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState} from 'react';
 import './App.css'
-import debounce from 'debounce'
 
 class Amount extends React.Component {
   render() {
@@ -24,17 +23,13 @@ class Amount extends React.Component {
 
 export default function App() {
   const [euros, setEuros] = useState(1000)
-  const [exchangeRate, setExchangeRate] = useState(Math.random() * 1000)
-  const debouncedExchangeRate = useCallback(debounce(setExchangeRate, 1000), [])
+  const [exchangeRate, setExchangeRate] = useState(Math.random() * 1000)  
   return (
     <>
       <Amount 
         name="Euros" 
         value={euros} 
-        onChange={euros => {                    
-          debouncedExchangeRate(0);
-          setEuros(euros);
-        }} 
+        onChange={setEuros}       
       />
       <Amount 
         name="$BTC" 
