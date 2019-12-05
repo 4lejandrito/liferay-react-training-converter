@@ -1,5 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import './App.css'
+
+const PremiumContext = React.createContext()
 
 class Amount extends React.Component {
   render() {
@@ -21,8 +23,10 @@ class Amount extends React.Component {
   }
 }
 
-function Converter({cryptoName, exchangeRate, renderTitle, onConversion = () => {}}) {
+function Converter({cryptoName, exchangeRate, renderTitle}) {
   const [euros, setEuros] = useState(1000)  
+  const onConversion = useContext(PremiumContext)
+
   return <div className="converter">
     {renderTitle && (
       <header>
@@ -55,24 +59,21 @@ export default function App() {
   const incrementCount = () => setCount(count + 1)
 
   return (
-    <>
+    <PremiumContext.Provider value={incrementCount}>
       <Converter 
         cryptoName="$BTC" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Bitcoins 💲!</strong>}
-        onConversion={incrementCount}
       />    
       <Converter 
         cryptoName="$ETH" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Ethereum 🤑!</strong>}
-        onConversion={incrementCount}
       />    
       <Converter 
         cryptoName="$LTC" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Litecoins 💰!</strong>}
-        onConversion={incrementCount}
       />   
       {isPremium ? (
         <strong>💎 Premium conversion</strong>
@@ -81,6 +82,6 @@ export default function App() {
           😎 Become premium
         </button>   
       )}
-    </>
+    </PremiumContext.Provider>
   )
 }
