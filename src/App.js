@@ -21,8 +21,6 @@ class Amount extends React.Component {
   }
 }
 
-const exchangeRate = Math.random() * 1000
-
 function Converter({cryptoName, exchangeRate}) {
   const [euros, setEuros] = useState(1000)  
   return <div className="converter">
@@ -41,7 +39,10 @@ function Converter({cryptoName, exchangeRate}) {
 export default function App() {  
   return (
     <>
-      <Converter cryptoName="$BTC" exchangeRate={exchangeRate} />
+      <Converter cryptoName="$BTC" exchangeRate={3.7} />
+      <Converter cryptoName="$ETH" exchangeRate={1.2} />
+      <Converter cryptoName="$TRX" exchangeRate={1.8} />
+      <Converter cryptoName="$XRP" exchangeRate={1.4} />
     </>
   )
 }
