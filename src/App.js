@@ -46,9 +46,10 @@ function Converter({cryptoName, exchangeRate, renderTitle, onConversion = () => 
 
 export default function App() {  
   const [count, setCount] = useState(0)
+  const [isPremium, setIsPremium] = useState(false)
 
   useEffect(() => {
-    if (count >= 5) alert("Try our freemium trial")
+    if (count >= 5 && !isPremium) alert("Try our freemium trial")
   }, [count]);
 
   return (
