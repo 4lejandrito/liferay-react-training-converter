@@ -21,25 +21,27 @@ class Amount extends React.Component {
   }
 }
 
-export default function App() {
-  const [euros, setEuros] = useState(1000)
-  const [exchangeRate, setExchangeRate] = useState(Math.random() * 1000)  
-  return (
-    <>
-      <Amount 
+const exchangeRate = Math.random() * 1000
+
+function Converter({cryptoName, exchangeRate}) {
+  const [euros, setEuros] = useState(1000)  
+  return <div className="converter">
+    <Amount 
         name="Euros" 
         value={euros} 
         onChange={setEuros}       
       />
-      <Amount 
-        name="$BTC" 
-        value={euros * exchangeRate}        
-      />
-      {exchangeRate ===  0 && (
-        <button onClick={() => setExchangeRate(Math.random() * 1000)}>
-          Recover BTC Market
-        </button>
-      )}
+    <Amount 
+      name={cryptoName} 
+      value={euros * exchangeRate}        
+    />     
+  </div>
+}
+
+export default function App() {  
+  return (
+    <>
+      <Converter cryptoName="$BTC" exchangeRate={exchangeRate} />
     </>
   )
 }
