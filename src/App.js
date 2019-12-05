@@ -21,9 +21,14 @@ class Amount extends React.Component {
   }
 }
 
-function Converter({cryptoName, exchangeRate}) {
+function Converter({cryptoName, exchangeRate, renderTitle}) {
   const [euros, setEuros] = useState(1000)  
   return <div className="converter">
+    {renderTitle && (
+      <header>
+        {renderTitle()}
+      </header>
+    )}
     <Amount 
         name="Euros" 
         value={euros} 
@@ -39,10 +44,21 @@ function Converter({cryptoName, exchangeRate}) {
 export default function App() {  
   return (
     <>
-      <Converter cryptoName="$BTC" exchangeRate={3.7} />
-      <Converter cryptoName="$ETH" exchangeRate={1.2} />
-      <Converter cryptoName="$TRX" exchangeRate={1.8} />
-      <Converter cryptoName="$XRP" exchangeRate={1.4} />
+      <Converter 
+        cryptoName="$BTC" 
+        exchangeRate={3.7} 
+        renderTitle={() => <strong>Bitcoins 💲!</strong>}
+      />    
+      <Converter 
+        cryptoName="$ETH" 
+        exchangeRate={3.7} 
+        renderTitle={() => <strong>Ethereum 🤑!</strong>}
+      />    
+      <Converter 
+        cryptoName="$LTC" 
+        exchangeRate={3.7} 
+        renderTitle={() => <strong>Litecoins 💰!</strong>}
+      />      
     </>
   )
 }
