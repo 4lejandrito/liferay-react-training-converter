@@ -52,31 +52,27 @@ export default function App() {
     if (count >= 5 && !isPremium) alert("Try our freemium trial")
   }, [count]);
 
+  const incrementCount = () => setCount(count + 1)
+
   return (
     <>
       <Converter 
         cryptoName="$BTC" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Bitcoins 💲!</strong>}
-        onConversion={() => 
-          setCount(count + 1)
-        }
+        onConversion={incrementCount}
       />    
       <Converter 
         cryptoName="$ETH" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Ethereum 🤑!</strong>}
-        onConversion={() => 
-          setCount(count + 1)
-        }
+        onConversion={incrementCount}
       />    
       <Converter 
         cryptoName="$LTC" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Litecoins 💰!</strong>}
-        onConversion={() => 
-          setCount(count + 1)
-        }
+        onConversion={incrementCount}
       />   
       {isPremium ? (
         <strong>💎 Premium conversion</strong>
