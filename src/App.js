@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css'
 
 class Amount extends React.Component {
@@ -21,7 +21,7 @@ class Amount extends React.Component {
   }
 }
 
-function Converter({cryptoName, exchangeRate, renderTitle}) {
+function Converter({cryptoName, exchangeRate, renderTitle, onConversion = () => {}}) {
   const [euros, setEuros] = useState(1000)  
   return <div className="converter">
     {renderTitle && (
@@ -32,7 +32,10 @@ function Converter({cryptoName, exchangeRate, renderTitle}) {
     <Amount 
         name="Euros" 
         value={euros} 
-        onChange={setEuros}       
+        onChange={euros => {
+          setEuros(euros);
+          onConversion();
+        }}       
       />
     <Amount 
       name={cryptoName} 
@@ -42,23 +45,45 @@ function Converter({cryptoName, exchangeRate, renderTitle}) {
 }
 
 export default function App() {  
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    if (count >= 5) alert("Try our freemium trial")
+  }, [count]);
+
   return (
     <>
       <Converter 
         cryptoName="$BTC" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Bitcoins 💲!</strong>}
+        onConversion={() => 
+          setCount(count + 1)
+        }
       />    
       <Converter 
         cryptoName="$ETH" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Ethereum 🤑!</strong>}
+        onConversion={() => 
+          setCount(count + 1)
+        }
       />    
       <Converter 
         cryptoName="$LTC" 
         exchangeRate={3.7} 
         renderTitle={() => <strong>Litecoins 💰!</strong>}
-      />      
+        onConversion={() => 
+          setCount(count + 1)
+        }
+      />   
+      {isPremium ? (
+        <strong>💎 Premium conversion</strong>
+      ) : (
+        <button onClick={() => setIsPremium(true)}>
+          😎 Become premium
+        </button>   
+      )}
     </>
   )
 }
